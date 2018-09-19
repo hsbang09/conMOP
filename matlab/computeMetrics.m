@@ -23,7 +23,7 @@ try
     refObj = dlmread(strcat(root, filesep, 'results_kd4', filesep, 'refpop', filesep, 'refpop.obj'));
     
     %initialize problem
-    prob = seak.conmop.ConstellationOptimizer();
+    prob = ConstellationOptimizer();
     refPoint = max(refObj)*1.1;
     fhv = org.moeaframework.core.indicator.Hypervolume(prob, refPop, refPoint);
     igd = org.moeaframework.core.indicator.InvertedGenerationalDistance(prob, refPop);

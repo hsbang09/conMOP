@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>seakers</groupId>
-            <artifactId>SystemArchitectureProblems</artifactId>
+            <artifactId>system-architecture-problems</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
