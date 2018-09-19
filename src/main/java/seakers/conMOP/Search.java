@@ -61,7 +61,7 @@ import seak.orekit.object.GndStation;
 import seak.orekit.object.communications.ReceiverAntenna;
 import seak.orekit.object.communications.TransmitterAntenna;
 import seak.orekit.util.OrekitConfig;
-import aos.creditassignment.setimprovement.SetImprovementDominance;
+import seakers.aos.creditassignment.setimprovement.SetImprovementDominance;
 import seakers.aos.history.AOSHistoryIO;
 import seakers.aos.operator.AOSVariation;
 import seakers.aos.operator.AOSVariationSI;
