@@ -6,7 +6,7 @@
 package seakers.conmop.variable;
 
 import org.moeaframework.core.Variable;
-import seak.orekit.object.Constellation;
+import seakers.orekit.object.Constellation;
 
 /**
  * Interface for a constellation variable

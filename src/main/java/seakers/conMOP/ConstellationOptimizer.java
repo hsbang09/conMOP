@@ -45,22 +45,22 @@ import seakers.conMOP.variable.BooleanSatelliteVariable;
 import seakers.conMOP.variable.ConstellationMatrix;
 import seakers.conMOP.variable.ConstellationVariable;
 import seakers.conMOP.variable.SatelliteVariable;
-import seak.orekit.coverage.access.TimeIntervalArray;
-import seak.orekit.coverage.analysis.AnalysisMetric;
-import seak.orekit.coverage.analysis.FastCoverageAnalysis;
-import seak.orekit.coverage.analysis.GroundEventAnalyzer;
-import seak.orekit.event.EventAnalysis;
-import seak.orekit.event.GndStationEventAnalysis;
-import seak.orekit.object.CommunicationBand;
-import seak.orekit.object.Constellation;
-import seak.orekit.object.CoverageDefinition;
-import seak.orekit.object.GndStation;
-import seak.orekit.object.Satellite;
-import seak.orekit.object.communications.ReceiverAntenna;
-import seak.orekit.object.communications.TransmitterAntenna;
-import seak.orekit.propagation.PropagatorFactory;
-import seak.orekit.scenario.Scenario;
-import seak.orekit.util.Orbits;
+import seakers.orekit.coverage.access.TimeIntervalArray;
+import seakers.orekit.coverage.analysis.AnalysisMetric;
+import seakers.orekit.coverage.analysis.FastCoverageAnalysis;
+import seakers.orekit.coverage.analysis.GroundEventAnalyzer;
+import seakers.orekit.event.EventAnalysis;
+import seakers.orekit.event.GndStationEventAnalysis;
+import seakers.orekit.object.CommunicationBand;
+import seakers.orekit.object.Constellation;
+import seakers.orekit.object.CoverageDefinition;
+import seakers.orekit.object.GndStation;
+import seakers.orekit.object.Satellite;
+import seakers.orekit.object.communications.ReceiverAntenna;
+import seakers.orekit.object.communications.TransmitterAntenna;
+import seakers.orekit.propagation.PropagatorFactory;
+import seakers.orekit.scenario.Scenario;
+import seakers.orekit.util.Orbits;
 
 /**
  * Problem to optimize the number of satellites in a constellation and their

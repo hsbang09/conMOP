@@ -7,7 +7,7 @@ package seakers.conMOP.launch;
 
 import org.hipparchus.util.FastMath;
 import org.orekit.utils.Constants;
-import seak.orekit.util.Orbits;
+import seakers.orekit.util.Orbits;
 
 /**
  * Computes delta v for different orbit maneuvers

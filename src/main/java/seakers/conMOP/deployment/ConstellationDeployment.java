@@ -15,7 +15,7 @@ import seakers.conMOP.comparators.SatelliteComparator;
 import seakers.conMOP.launch.DeltaV;
 import seakers.conMOP.util.OrbitalElementEnum;
 import seakers.conMOP.variable.SatelliteVariable;
-import seak.orekit.util.Orbits;
+import seakers.orekit.util.Orbits;
 
 /**
  * Class that contains strategies on constellation deployment

@@ -29,21 +29,21 @@ import org.orekit.utils.Constants;
 import org.orekit.utils.IERSConventions;
 import seakers.conMOP.util.Bounds;
 import seakers.conMOP.variable.WalkerVariable;
-import seak.orekit.constellations.Walker;
-import seak.orekit.coverage.analysis.AnalysisMetric;
-import seak.orekit.coverage.analysis.GroundEventAnalyzer;
-import seak.orekit.event.EventAnalysis;
-import seak.orekit.event.EventAnalysisEnum;
-import seak.orekit.event.EventAnalysisFactory;
-import seak.orekit.event.FieldOfViewEventAnalysis;
-import seak.orekit.object.Constellation;
-import seak.orekit.object.CoverageDefinition;
-import seak.orekit.object.Instrument;
-import seak.orekit.object.Satellite;
-import seak.orekit.object.fieldofview.NadirSimpleConicalFOV;
-import seak.orekit.propagation.PropagatorFactory;
-import seak.orekit.scenario.Scenario;
-import seak.orekit.util.OrekitConfig;
+import seakers.orekit.constellations.Walker;
+import seakers.orekit.coverage.analysis.AnalysisMetric;
+import seakers.orekit.coverage.analysis.GroundEventAnalyzer;
+import seakers.orekit.event.EventAnalysis;
+import seakers.orekit.event.EventAnalysisEnum;
+import seakers.orekit.event.EventAnalysisFactory;
+import seakers.orekit.event.FieldOfViewEventAnalysis;
+import seakers.orekit.object.Constellation;
+import seakers.orekit.object.CoverageDefinition;
+import seakers.orekit.object.Instrument;
+import seakers.orekit.object.Satellite;
+import seakers.orekit.object.fieldofview.NadirSimpleConicalFOV;
+import seakers.orekit.propagation.PropagatorFactory;
+import seakers.orekit.scenario.Scenario;
+import seakers.orekit.util.OrekitConfig;
 
 /**
  * Optimizer for a simple 1 coverage definition problem
