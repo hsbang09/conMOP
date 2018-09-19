@@ -5,7 +5,7 @@
  */
 package seakers.conmop.operators.knowledge;
 
-import aos.operator.AbstractCheckParent;
+import seakers.aos.operator.AbstractCheckParent;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.hipparchus.stat.descriptive.DescriptiveStatistics;
@@ -55,7 +55,7 @@ public class IncreasePlanes extends AbstractCheckParent  {
         ArrayList<SatelliteVariable> sats = new ArrayList<>();
 
         //randomly select a installment to break up
-        ArrayList<Installment> installmentCandidates = new ArrayList();
+        ArrayList<Installment> installmentCandidates = new ArrayList<>();
         for (Installment installment : deploymentStrategy.getInstallments()) {
             if (installment.getSatellites().size() > 1) {
                 installmentCandidates.add(installment);

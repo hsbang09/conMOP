@@ -77,7 +77,7 @@ public class WalkerVariable extends ConstellationVariable {
      */
     public WalkerVariable(Bounds<Double> smaBound, Bounds<Double> incBound,
             Bounds<Integer> tBound, Bounds<Integer> pBound, Bounds<Integer> fBound) {
-        super(tBound, smaBound, new Bounds(0.0, 0.0), incBound);
+        super(tBound, smaBound, new Bounds<>(0.0, 0.0), incBound);
         this.tBound = tBound;
         this.pBound = pBound;
         this.fBound = fBound;
@@ -164,7 +164,7 @@ public class WalkerVariable extends ConstellationVariable {
         final double delRaan = pu * s; //node spacing
         final double phasing = pu * f;
 
-        final ArrayList<SatelliteVariable> satelliteVariables = new ArrayList(t);
+        final ArrayList<SatelliteVariable> satelliteVariables = new ArrayList<>(t);
         for (int planeNum = 0; planeNum < p; planeNum++) {
             for (int satNum = 0; satNum < s; satNum++) {
                 //since eccentricity = 0, doesn't matter if using true or mean anomaly

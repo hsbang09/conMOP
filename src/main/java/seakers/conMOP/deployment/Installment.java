@@ -44,7 +44,7 @@ public class Installment implements Serializable{
      * @param otherDV Other deltaV [m/s] (e.g. from a space tug required to deploy this installment
      */
     public Installment(List<SatelliteVariable> satellites, double launchDV, double otherDV) {
-        this.satellites = new ArrayList(satellites);
+        this.satellites = new ArrayList<>(satellites);
         Collections.unmodifiableList(this.satellites);
         this.launchDV = launchDV;
         this.otherDV = otherDV;

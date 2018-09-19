@@ -55,7 +55,7 @@ public class VariableLengthOnePointCrossover implements Variation {
      * shorter of the two chromosomes
      */
     public VariableLengthOnePointCrossover(double probability, boolean doubleCrossPoint) {
-        this(probability, doubleCrossPoint, new Bounds(1, Integer.MAX_VALUE));
+        this(probability, doubleCrossPoint, new Bounds<>(1, Integer.MAX_VALUE));
     }
 
     /**
@@ -157,8 +157,8 @@ public class VariableLengthOnePointCrossover implements Variation {
                 crossoverPoint2 = crossoverPoint1;
             }
 
-            ArrayList<SatelliteVariable> satList1 = new ArrayList();
-            ArrayList<SatelliteVariable> satList2 = new ArrayList();
+            ArrayList<SatelliteVariable> satList1 = new ArrayList<>();
+            ArrayList<SatelliteVariable> satList2 = new ArrayList<>();
             Iterator<SatelliteVariable> iter1 = constel1.getSatelliteVariables().iterator();
             Iterator<SatelliteVariable> iter2 = constel2.getSatelliteVariables().iterator();
 

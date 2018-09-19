@@ -17,7 +17,7 @@ public class LaunchVehicle implements Iterable<LaunchStage>{
     private final ArrayList<LaunchStage> stages;
 
     public LaunchVehicle(ArrayList<LaunchStage> stages) {
-        this.stages = new ArrayList(stages);
+        this.stages = new ArrayList<>(stages);
     }
 
     public double getDeltaV() {

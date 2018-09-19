@@ -142,7 +142,7 @@ public class WalkerOptimizer extends AbstractProblem {
             Bounds<Double> sma,
             Bounds<Double> inc, Properties properties) {
         this(name, startDate, endDate, propagatorFactory, poi, tBound, tBound,
-                new Bounds(0, tBound.getUpperBound() - 1), sma, inc, properties);
+                new Bounds<>(0, tBound.getUpperBound() - 1), sma, inc, properties);
     }
 
     public WalkerOptimizer(String name, AbsoluteDate startDate, AbsoluteDate endDate,
@@ -186,7 +186,7 @@ public class WalkerOptimizer extends AbstractProblem {
     @Override
     public void evaluate(Solution solution) {
         
-        ArrayList<Constellation> constellations = new ArrayList();
+        ArrayList<Constellation> constellations = new ArrayList<>();
         
         RealVariable sma = (RealVariable) solution.getVariable(0);
         RealVariable inc = (RealVariable) solution.getVariable(1);

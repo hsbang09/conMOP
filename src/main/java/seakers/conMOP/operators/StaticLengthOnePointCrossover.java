@@ -85,8 +85,8 @@ public class StaticLengthOnePointCrossover implements Variation {
             int crossoverPoint1 = PRNG.nextInt(
                     constel1.getSatelliteVariables().size() - 1);
 
-            ArrayList<SatelliteVariable> satList1 = new ArrayList();
-            ArrayList<SatelliteVariable> satList2 = new ArrayList();
+            ArrayList<SatelliteVariable> satList1 = new ArrayList<>();
+            ArrayList<SatelliteVariable> satList2 = new ArrayList<>();
             Iterator<SatelliteVariable> iter1 = constel1.getSatelliteVariables().iterator();
             Iterator<SatelliteVariable> iter2 = constel2.getSatelliteVariables().iterator();
 

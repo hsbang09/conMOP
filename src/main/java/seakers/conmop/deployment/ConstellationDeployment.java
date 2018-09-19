@@ -54,7 +54,7 @@ public class ConstellationDeployment {
         }
 
         //make a list ascedning in inclination
-        ArrayList<SatelliteVariable> satIncList = new ArrayList(satellites);
+        ArrayList<SatelliteVariable> satIncList = new ArrayList<>(satellites);
         Collections.sort(satIncList, new SatelliteComparator(OrbitalElementEnum.INC));
 
         //Find best case deltaV for all the plane changes conducted at highest altitude
@@ -63,7 +63,7 @@ public class ConstellationDeployment {
         for (int i = 1; i < satIncList.size(); i++) {
             minDVPlaneChange += DeltaV.simplePlaneChange(vel, satIncList.get(i).getInc() - satIncList.get(i - 1).getInc());
             if (minDVPlaneChange > deltaVLimit) {
-                return new ArrayList();
+                return new ArrayList<>();
             }
         }
         

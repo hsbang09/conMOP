@@ -5,7 +5,7 @@
  */
 package seakers.conmop.operators.knowledge;
 
-import aos.operator.AbstractCheckParent;
+import seakers.aos.operator.AbstractCheckParent;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.hipparchus.stat.descriptive.DescriptiveStatistics;
@@ -56,7 +56,7 @@ public class DecreasePlanes extends AbstractCheckParent {
         DeploymentStrategy deploymentStrategy = constelVariable.getDeploymentStrategy();
 
         //Select an installment to move
-        ArrayList<Installment> candidates = new ArrayList(deploymentStrategy.getInstallments());
+        ArrayList<Installment> candidates = new ArrayList<>(deploymentStrategy.getInstallments());
         Collections.shuffle(candidates);
         Installment candidate = candidates.get(0);
 

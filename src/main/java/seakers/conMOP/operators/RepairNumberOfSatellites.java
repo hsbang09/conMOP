@@ -66,7 +66,7 @@ public class RepairNumberOfSatellites implements Variation {
                 } 
                 while(constelVar.getNumberOfSatellites() > constelVar.getSatelliteBound().getUpperBound()) {
                     //remove a random sallite from the chromosome
-                    ArrayList<SatelliteVariable> sats = new ArrayList(constelVar.getSatelliteVariables());
+                    ArrayList<SatelliteVariable> sats = new ArrayList<>(constelVar.getSatelliteVariables());
                     sats.remove(PRNG.nextInt(sats.size()));
                     constelVar.setSatelliteVariables(sats);
                 }

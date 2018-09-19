@@ -102,7 +102,7 @@ public class OrbitElementOperator implements Variation {
         SatelliteVariable[][] satsToCross = new SatelliteVariable[constellations.length][minNSats];
         int[][] satsToCrossIndex = new int[constellations.length][minNSats];
         for (int i = 0; i < constellations.length; i++) {
-            ArrayList<SatelliteVariable> candidates = new ArrayList(constellations[i].getSatelliteVariables());
+            ArrayList<SatelliteVariable> candidates = new ArrayList<>(constellations[i].getSatelliteVariables());
             for (int j = 0; j < minNSats; j++) {
                 int index = PRNG.nextInt(candidates.size());
                 satsToCross[i][j] = candidates.get(index);
@@ -112,7 +112,7 @@ public class OrbitElementOperator implements Variation {
 
         //find which varibles should be included in search.
         //variables with lower bound == upperbound are not included
-        HashMap<String, Integer> variableLocus = new HashMap();
+        HashMap<String, Integer> variableLocus = new HashMap<>();
         //assume that each satellite variable has the same upper and lower bounds
         SatelliteVariable repSat = satsToCross[0][0];
         int locusIndex = 0;
@@ -221,7 +221,7 @@ public class OrbitElementOperator implements Variation {
     private SatelliteVariable[] evolve(SatelliteVariable[] satellites) {
         //find which varibles should be included in search.
         //variables with lower bound == upperbound are not included
-        HashMap<String, Integer> variableLocus = new HashMap();
+        HashMap<String, Integer> variableLocus = new HashMap<>();
         //assume that each satellite variable has the same upper and lower bounds
         SatelliteVariable repSat = satellites[0];
         int locusIndex = 0;

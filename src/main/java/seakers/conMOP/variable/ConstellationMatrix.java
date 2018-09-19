@@ -52,7 +52,7 @@ public class ConstellationMatrix extends ConstellationVariable {
 
     @Override
     public void randomize() {
-        ArrayList<SatelliteVariable> sats = new ArrayList();
+        ArrayList<SatelliteVariable> sats = new ArrayList<>();
         for (int i = 0; i < super.getSatelliteBound().getUpperBound(); i++) {
             SatelliteVariable var = createSatelliteVariable();
             var.randomize();

@@ -5,7 +5,7 @@
  */
 package seakers.conmop.operators.knowledge;
 
-import aos.operator.AbstractCheckParent;
+import seakers.aos.operator.AbstractCheckParent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -52,7 +52,7 @@ public class DistributePlanes extends AbstractCheckParent  {
         DeploymentStrategy deploymentStrategy = constelVariable.getDeploymentStrategy();
 
         ArrayList<SatelliteVariable> allSats = new ArrayList<>();
-        ArrayList<Installment> installmentCandidates = new ArrayList();
+        ArrayList<Installment> installmentCandidates = new ArrayList<>();
         for (Installment installment : deploymentStrategy.getInstallments()) {
             installmentCandidates.add(installment);
             allSats.addAll(installment.getSatellites());

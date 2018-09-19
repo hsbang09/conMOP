@@ -5,9 +5,9 @@
  */
 package seakers.conmop;
 
-import aos.aos.AOSMOEA;
-import aos.operatorselectors.AdaptivePursuit;
-import aos.operatorselectors.OperatorSelector;
+import seakers.aos.aos.AOSMOEA;
+import seakers.aos.operatorselectors.AdaptivePursuit;
+import seakers.aos.operatorselectors.OperatorSelector;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,10 +61,10 @@ import seak.orekit.object.GndStation;
 import seak.orekit.object.communications.ReceiverAntenna;
 import seak.orekit.object.communications.TransmitterAntenna;
 import seak.orekit.util.OrekitConfig;
-import aos.creditassignment.setimprovement.SetImprovementDominance;
-import aos.history.AOSHistoryIO;
-import aos.operator.AOSVariation;
-import aos.operator.AOSVariationSI;
+import seakers.aos.creditassignment.setimprovement.SetImprovementDominance;
+import seakers.aos.history.AOSHistoryIO;
+import seakers.aos.operator.AOSVariation;
+import seakers.aos.operator.AOSVariationSI;
 
 /**
  *
@@ -102,9 +102,9 @@ public class Search {
 
         Properties problemProperty = new Properties();
 
-        Bounds<Integer> tBounds = new Bounds(5, 15);
-        Bounds<Double> smaBounds = new Bounds(a + 400000, a + 1000000);
-        Bounds<Double> incBounds = new Bounds(20. * DEG_TO_RAD, 100. * DEG_TO_RAD);
+        Bounds<Integer> tBounds = new Bounds<>(5, 15);
+        Bounds<Double> smaBounds = new Bounds<>(a + 400000, a + 1000000);
+        Bounds<Double> incBounds = new Bounds<>(20. * DEG_TO_RAD, 100. * DEG_TO_RAD);
 
         //properties for launch deployment
         problemProperty.setProperty("raanTimeLimit", "604800");
@@ -156,7 +156,7 @@ public class Search {
 
             //set up variations
             //example of operators you might use
-            ArrayList<Variation> operators = new ArrayList();
+            ArrayList<Variation> operators = new ArrayList<>();
             operators.add(new OrbitElementOperator(
                     new CompoundVariation(new SBX(1, 20), new VariablePM(20))));
             operators.add(new VariableLengthOnePointCrossover(1.0, tBounds));

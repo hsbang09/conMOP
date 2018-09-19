@@ -202,8 +202,8 @@ public class ConstellationOptimizer extends AbstractProblem {
             Set<GeodeticPoint> poi, double halfAngle, Bounds<Integer> nSatBound, Bounds<Double> sma,
             Bounds<Double> inc, Collection<GndStation> gndStations, Properties properties) {
         this(name, startDate, endDate, propagatorFactory, poi, halfAngle, nSatBound,
-                sma, new Bounds(0.0, 0.0), inc,
-                new Bounds(0.0, 2 * Math.PI), new Bounds(0.0, 0.0), new Bounds(0.0, 2 * Math.PI), gndStations, properties);
+                sma, new Bounds<>(0.0, 0.0), inc,
+                new Bounds<>(0.0, 2 * Math.PI), new Bounds<>(0.0, 0.0), new Bounds<>(0.0, 2 * Math.PI), gndStations, properties);
     }
 
     public ConstellationOptimizer(String name, AbsoluteDate startDate, AbsoluteDate endDate,
@@ -251,7 +251,7 @@ public class ConstellationOptimizer extends AbstractProblem {
     @Override
     public void evaluate(Solution solution) {
 
-        ArrayList<Constellation> constellations = new ArrayList();
+        ArrayList<Constellation> constellations = new ArrayList<>();
         ConstellationVariable constel = (ConstellationVariable) solution.getVariable(0);
 
         ArrayList<Satellite> satelliteList = new ArrayList<>();
@@ -268,7 +268,7 @@ public class ConstellationOptimizer extends AbstractProblem {
             Orbit orb = var.toOrbit(inertialFrame, startDate, earthMu);
             HashSet<CommunicationBand> comms = new HashSet<>();
             comms.add(CommunicationBand.UHF);
-            satelliteList.add(new Satellite("sat", orb, null, new ArrayList(),
+            satelliteList.add(new Satellite("sat", orb, null, new ArrayList<>(),
                     new ReceiverAntenna(1, comms), new TransmitterAntenna(1, comms), 100, 100));
         }
 
@@ -288,7 +288,7 @@ public class ConstellationOptimizer extends AbstractProblem {
         //assign each satellite to each ground station
         Map<Satellite, Set<GndStation>> stationAssignment = new HashMap<>();
         for (Satellite sat : satelliteList) {
-            stationAssignment.put(sat, new HashSet(gndStations));
+            stationAssignment.put(sat, new HashSet<>(gndStations));
         }
         GndStationEventAnalysis gndStaEA = new GndStationEventAnalysis(startDate, endDate, inertialFrame, stationAssignment, propagatorFactory);
         eventanalyses.add(gndStaEA);
@@ -350,7 +350,7 @@ public class ConstellationOptimizer extends AbstractProblem {
      */
     private DeploymentStrategy deploymentStrategy(Collection<SatelliteVariable> satellites) {
         //check inclinations and raan first
-        Map<Double, Map<Double, List<SatelliteVariable>>> map = new HashMap();
+        Map<Double, Map<Double, List<SatelliteVariable>>> map = new HashMap<>();
         for (SatelliteVariable sat : satellites) {
             if (!map.containsKey(sat.getInc())) {
                 map.put(sat.getInc(), new HashMap<>());
@@ -364,7 +364,7 @@ public class ConstellationOptimizer extends AbstractProblem {
         Collection<SatelliteVariable> unassignedSats = new ArrayList<>();
 
         //check for large groups
-        Collection<Collection<SatelliteVariable>> largeGroups = new ArrayList();
+        Collection<Collection<SatelliteVariable>> largeGroups = new ArrayList<>();
         for (Double inc : map.keySet()) {
             for (Double raan : map.get(inc).keySet()) {
                 if (map.get(inc).get(raan).size() > 5) {
@@ -376,9 +376,9 @@ public class ConstellationOptimizer extends AbstractProblem {
         }
 
         //Check if the groups can be launched together
-        Collection<List<SatelliteVariable>> feasibleLargeDeployments = new ArrayList();
+        Collection<List<SatelliteVariable>> feasibleLargeDeployments = new ArrayList<>();
         for (Collection<SatelliteVariable> satGroup : largeGroups) {
-            List<SatelliteVariable> satList = new ArrayList(satGroup);
+            List<SatelliteVariable> satList = new ArrayList<>(satGroup);
             boolean meetsConstraints = true;
             for (int i = 1; i < satList.size(); i++) {
                 //check RAAN constraint with newly added satellite
@@ -398,9 +398,9 @@ public class ConstellationOptimizer extends AbstractProblem {
         }
         
         //find assignments for the other satellites
-        Collection<Collection<List<SatelliteVariable>>> feasibleDeployments = new ArrayList();
+        Collection<Collection<List<SatelliteVariable>>> feasibleDeployments = new ArrayList<>();
         if(unassignedSats.isEmpty()){
-            feasibleDeployments.add(new ArrayList());
+            feasibleDeployments.add(new ArrayList<>());
         }else{
             feasibleDeployments = enumeratePartitions(unassignedSats);
         }
@@ -458,20 +458,20 @@ public class ConstellationOptimizer extends AbstractProblem {
         ArrayList<SatelliteVariable> sats = new ArrayList<>(satellites);
 
         //in implementation, we maintain the maximum partition number of the array in the 0th index
-        Collection<int[]> prev = new ArrayList();
+        Collection<int[]> prev = new ArrayList<>();
         prev.add(new int[]{0, 0});
         Collection<Collection<List<SatelliteVariable>>> out;
-        ArrayList<int[]> curr = new ArrayList();;
+        ArrayList<int[]> curr = new ArrayList<>();;
         boolean trivial = false;
 
         //handle trivial cases
         if (sats.size() == 1) {
-            curr = new ArrayList(prev);
+            curr = new ArrayList<>(prev);
             trivial = true;
         }
 
         while (!trivial) {
-            curr = new ArrayList();
+            curr = new ArrayList<>();
             for (int[] subPart : prev) {
                 for (int partNum = 0; partNum <= subPart[0] + 1; partNum++) {
                     int[] extended = Arrays.copyOf(subPart, subPart.length + 1);
@@ -526,7 +526,7 @@ public class ConstellationOptimizer extends AbstractProblem {
             prev = curr;
         }
 
-        out = new ArrayList(curr.size());
+        out = new ArrayList<>(curr.size());
         for (int[] partition : curr) {
             //map contains the launch groups (keys are partition numbers)
             HashMap<Integer, ArrayList<SatelliteVariable>> map = new HashMap<>();

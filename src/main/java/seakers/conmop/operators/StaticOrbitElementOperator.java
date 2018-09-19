@@ -99,7 +99,7 @@ public class StaticOrbitElementOperator implements Variation {
 
         //find which varibles should be included in search.
         //variables with lower bound == upperbound are not included
-        HashMap<String, Integer> variableLocus = new HashMap();
+        HashMap<String, Integer> variableLocus = new HashMap<>();
         //assume that each satellite variable has the same upper and lower bounds
         SatelliteVariable repSat = constellations[0].createSatelliteVariable();
         int locusIndex = 0;
@@ -212,7 +212,7 @@ public class StaticOrbitElementOperator implements Variation {
 
         //find which varibles should be included in search.
         //variables with lower bound == upperbound are not included
-        HashMap<String, Integer> variableLocus = new HashMap();
+        HashMap<String, Integer> variableLocus = new HashMap<>();
         //assume that each satellite variable has the same upper and lower bounds
         SatelliteVariable repSat = satellites[0];
         int locusIndex = 0;

@@ -36,7 +36,7 @@ public class Factor {
             while (line != null) {
                 String[] args = line.split("\\s");
                 String[] divisors = args[1].split(",");
-                List<Integer> divisorList = new ArrayList(divisors.length);
+                List<Integer> divisorList = new ArrayList<>(divisors.length);
                 for (String div : divisors) {
                     divisorList.add(Integer.parseInt(div));
                 }

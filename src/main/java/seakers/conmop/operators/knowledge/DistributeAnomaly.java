@@ -5,7 +5,7 @@
  */
 package seakers.conmop.operators.knowledge;
 
-import aos.operator.AbstractCheckParent;
+import seakers.aos.operator.AbstractCheckParent;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.hipparchus.util.FastMath;
