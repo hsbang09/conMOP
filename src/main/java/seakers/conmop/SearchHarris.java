@@ -130,7 +130,7 @@ public class SearchHarris {
         int populationSize = 50;
         int maxNFE = 200;
 //        String mode = path + "static_";
-        String mode = path + "variable_extra";
+        String mode = path + "variable_";
 //        String mode = "kd";
 
         for (int i = 0; i < 1; i++) {
@@ -189,7 +189,7 @@ public class SearchHarris {
 
             // Initialize population writer
             SatelliteVariableWriter writer = new SatelliteVariableWriter();
-            int iter = 0;
+            int popIndex = 0;
 
             while (aos.getNumberOfEvaluations() < maxNFE) {
 
@@ -201,8 +201,10 @@ public class SearchHarris {
                                 aos.getNumberOfEvaluations(), maxNFE, currentTime,
                                 currentTime / emoea.getNumberOfEvaluations() * (maxNFE - aos.getNumberOfEvaluations())));
 
-                writer.write(mode + i + "_population_" + iter + ".csv", aos.getPopulation().iterator());
-                iter++;
+                if(aos.getNumberOfEvaluations() % 500 == 0){
+                    writer.write(mode + i + "_population_" + popIndex + ".csv", aos.getPopulation().iterator());
+                    popIndex++;
+                }
             }
             System.out.println(aos.getArchive().size());
 

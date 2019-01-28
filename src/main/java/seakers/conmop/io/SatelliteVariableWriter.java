@@ -15,6 +15,8 @@ import java.util.StringJoiner;
 
 public class SatelliteVariableWriter {
 
+    public final int maxNumSat = 20;
+
     public void write(String filename, Iterator<Solution> populationIter){
 
         List<Solution> population = new ArrayList<>();
@@ -34,26 +36,17 @@ public class SatelliteVariableWriter {
         StringBuilder content = new StringBuilder();
 
         ConstellationVariable temp = (ConstellationVariable) population.get(0).getVariable(0);
-        int cnt = 0;
-        for (SatelliteVariable var : temp.getSatelliteVariables()) {
-            if (var instanceof BooleanSatelliteVariable) {
-                if (!((BooleanSatelliteVariable) var).getManifest()) {
-                    continue;
-                }
-            }
-            cnt++;
-        }
 
-        for(int i = 0; i < cnt; i++){
+        for(int i = 0; i < maxNumSat; i++){
             header.add("sma" + i);
         }
-        for(int i = 0; i < cnt; i++){
+        for(int i = 0; i < maxNumSat; i++){
             header.add("inc" + i);
         }
-        for(int i = 0; i < cnt; i++){
+        for(int i = 0; i < maxNumSat; i++){
             header.add("raan" + i);
         }
-        for(int i = 0; i < cnt; i++){
+        for(int i = 0; i < maxNumSat; i++){
             header.add("ta" + i);
         }
 
@@ -83,17 +76,37 @@ public class SatelliteVariableWriter {
             }
 
             StringJoiner row = new StringJoiner(",");
-            for(double val: sma){
-                row.add(Double.toString(val));
+
+            for(int i = 0; i < maxNumSat; i++){
+                if(i < sma.size()){
+                    row.add(Double.toString(sma.get(i)));
+                }else{
+                    row.add("null");
+                }
             }
-            for(double val: inc){
-                row.add(Double.toString(val));
+
+            for(int i = 0; i < maxNumSat; i++){
+                if(i < sma.size()){
+                    row.add(Double.toString(inc.get(i)));
+                }else{
+                    row.add("null");
+                }
             }
-            for(double val: raan){
-                row.add(Double.toString(val));
+
+            for(int i = 0; i < maxNumSat; i++){
+                if(i < sma.size()){
+                    row.add(Double.toString(raan.get(i)));
+                }else{
+                    row.add("null");
+                }
             }
-            for(double val: ta){
-                row.add(Double.toString(val));
+
+            for(int i = 0; i < maxNumSat; i++){
+                if(i < sma.size()){
+                    row.add(Double.toString(ta.get(i)));
+                }else{
+                    row.add("null");
+                }
             }
 
             // Add objectives
