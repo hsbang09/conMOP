@@ -28,6 +28,8 @@ public class SatelliteVariableWriter {
 
     public void write(String filename, List<Solution> population){
 
+        System.out.println("Saving file: " + filename);
+
         StringJoiner header = new StringJoiner(",");
         StringBuilder content = new StringBuilder();
 

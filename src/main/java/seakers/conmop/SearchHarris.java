@@ -68,6 +68,9 @@ public class SearchHarris {
      * @throws OrekitException
      */
     public static void main(String[] args) throws OrekitException {
+
+        String path = "/home/ubuntu/conMOP/results/";
+
         //setup logger
         Level level = Level.FINEST;
         Logger.getGlobal().setLevel(level);
@@ -124,10 +127,10 @@ public class SearchHarris {
                 tBounds, smaBounds, incBounds, gndStations, problemProperty);
         
         //set up the search parameters
-        int populationSize = 200;
-        int maxNFE = 10000;
-//        String mode = "static_";
-        String mode = "variable_extra";
+        int populationSize = 50;
+        int maxNFE = 200;
+//        String mode = path + "static_";
+        String mode = path + "variable_extra";
 //        String mode = "kd";
 
         for (int i = 0; i < 1; i++) {
