@@ -102,9 +102,9 @@ public class Search {
 
         Properties problemProperty = new Properties();
 
-        Bounds<Integer> tBounds = new Bounds<>(5, 15);
+        Bounds<Integer> tBounds = new Bounds<>(1, 20);
         Bounds<Double> smaBounds = new Bounds<>(a + 400000, a + 1000000);
-        Bounds<Double> incBounds = new Bounds<>(20. * DEG_TO_RAD, 100. * DEG_TO_RAD);
+        Bounds<Double> incBounds = new Bounds<>(30. * DEG_TO_RAD, 100. * DEG_TO_RAD);
 
         //properties for launch deployment
         problemProperty.setProperty("raanTimeLimit", "604800");
@@ -138,10 +138,10 @@ public class Search {
         int populationSize = 200;
         int maxNFE = 10000;
 //        String mode = "static_";
-//        String mode = "variable_extra";
-        String mode = "kd";
+        String mode = "variable_extra";
+//        String mode = "kd";
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 1; i++) {
 
             long startTime = System.nanoTime();
             Initialization initialization = new RandomInitialization(problem,
@@ -149,10 +149,13 @@ public class Search {
 
             Population population = new Population();
             DominanceComparator comparator = new ParetoDominanceComparator();
-            EpsilonBoxDominanceArchive archive = new EpsilonBoxDominanceArchive(new double[]{30, 1, 100, 30});
+//            EpsilonBoxDominanceArchive archive = new EpsilonBoxDominanceArchive(new double[]{30, 1, 100, 30});
+            EpsilonBoxDominanceArchive archive = new EpsilonBoxDominanceArchive(new double[]{10, 1, 1000});
+
             final TournamentSelection selection = new TournamentSelection(2, comparator);
             EpsilonMOEA emoea = new EpsilonMOEA(problem, population, archive,
                     selection, null, initialization, comparator);
+
 
             //set up variations
             //example of operators you might use
@@ -160,10 +163,10 @@ public class Search {
             operators.add(new OrbitElementOperator(
                     new CompoundVariation(new SBX(1, 20), new VariablePM(20))));
             operators.add(new VariableLengthOnePointCrossover(1.0, tBounds));
-            operators.add(new DecreasePlanes());
-            operators.add(new DistributeAnomaly());
-            operators.add(new DistributePlanes());
-            operators.add(new IncreasePlanes());
+//            operators.add(new DecreasePlanes());
+//            operators.add(new DistributeAnomaly());
+//            operators.add(new DistributePlanes());
+//            operators.add(new IncreasePlanes());
 //            operators.add(new CompoundVariation(
 //                    new StaticOrbitElementOperator(
 //                            new CompoundVariation(new SBX(1, 20),
@@ -175,6 +178,7 @@ public class Search {
 //                    new StaticLengthOnePointCrossover(1.0), new StaticOrbitElementOperator(
 //                            new CompoundVariation(new VariablePM(20), new BitFlip(1./140.))),
 //                            new RepairNumberOfSatellites()));
+
 
             //create operator selector
             OperatorSelector operatorSelector = new AdaptivePursuit(operators, 0.8, 0.8, 0.03);
@@ -215,5 +219,4 @@ public class Search {
 
         OrekitConfig.end();
     }
-
 }

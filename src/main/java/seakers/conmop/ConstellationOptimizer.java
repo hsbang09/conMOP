@@ -307,25 +307,27 @@ public class ConstellationOptimizer extends AbstractProblem {
         solution.setObjective(1, satelliteList.size());
 //        solution.setObjective(1, gapStats.getPercentile(90));
 
-//        //compute average semi-major axis
-//        DescriptiveStatistics stats = new DescriptiveStatistics();
-//        for (Satellite sat : satelliteList) {
-//            stats.addValue(sat.getOrbit().getA());
-//        }
-//        solution.setObjective(2, stats.getMean());
-        DeploymentStrategy deployment = deploymentStrategy(constel.getSatelliteVariables());
-        constel.setDeploymentStrategy(deployment);
-        solution.setObjective(2, deployment.getTotalDV());
+        //compute average semi-major axis
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        for (Satellite sat : satelliteList) {
+            stats.addValue(sat.getOrbit().getA());
+        }
+        solution.setObjective(2, stats.getMean());
+
+//        DeploymentStrategy deployment = deploymentStrategy(constel.getSatelliteVariables());
+//        constel.setDeploymentStrategy(deployment);
+//        solution.setObjective(2, deployment.getTotalDV());
 
         //check ground sataion gap for each satellite
-        double maxGndGap = Double.NEGATIVE_INFINITY;
-        for (Satellite sat : satelliteList) {
-            GroundEventAnalyzer gndStaAnalyzer = new GroundEventAnalyzer(gndStaEA.getEvents(sat));
-            DescriptiveStatistics gndGapStats = gndStaAnalyzer.getStatistics(AnalysisMetric.DURATION, false, properties);
-            maxGndGap = FastMath.max(maxGndGap, gndGapStats.getMax());
-        }
+//        double maxGndGap = Double.NEGATIVE_INFINITY;
+//        for (Satellite sat : satelliteList) {
+//            GroundEventAnalyzer gndStaAnalyzer = new GroundEventAnalyzer(gndStaEA.getEvents(sat));
+//            DescriptiveStatistics gndGapStats = gndStaAnalyzer.getStatistics(AnalysisMetric.DURATION, false, properties);
+//            maxGndGap = FastMath.max(maxGndGap, gndGapStats.getMax());
+//        }
+//
+//        solution.setObjective(3, maxGndGap);
 
-        solution.setObjective(3, maxGndGap);
     }
 
     @Override
