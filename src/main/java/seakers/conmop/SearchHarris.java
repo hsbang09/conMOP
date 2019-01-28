@@ -142,9 +142,6 @@ public class SearchHarris {
             EpsilonBoxDominanceArchive archive = new EpsilonBoxDominanceArchive(new double[]{10, 1, 1000});
 
             final TournamentSelection selection = new TournamentSelection(2, comparator);
-            EpsilonMOEA emoea = new EpsilonMOEA(problem, population, archive,
-                    selection, null, initialization, comparator);
-
 
             //set up variations
             //example of operators you might use
@@ -175,12 +172,19 @@ public class SearchHarris {
             //create credit assignment
             SetImprovementDominance creditAssignment = new SetImprovementDominance(archive, 1, 0);
 
-            //create AOS
+            //create AOS strategy
             AOSVariation aosStrategy = new AOSVariationSI(operatorSelector, creditAssignment, populationSize);
+
+            // create EpsilonMOEA
+            EpsilonMOEA emoea = new EpsilonMOEA(problem, population, archive,
+                    selection, aosStrategy, initialization, comparator);
+
+            // create AOS
             AOSMOEA aos = new AOSMOEA(emoea, aosStrategy, true);
 
             System.out.println(String.format("Initializing population... Size = %d", populationSize));
             while (aos.getNumberOfEvaluations() < maxNFE) {
+
                 aos.step();
                 double currentTime = ((System.nanoTime() - startTime) / Math.pow(10, 9)) / 60.;
                 System.out.println(
