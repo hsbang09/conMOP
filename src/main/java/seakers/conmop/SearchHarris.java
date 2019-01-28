@@ -183,6 +183,11 @@ public class SearchHarris {
             AOSMOEA aos = new AOSMOEA(emoea, aosStrategy, true);
 
             System.out.println(String.format("Initializing population... Size = %d", populationSize));
+
+            // Initialize population writer
+            SatelliteVariableWriter writer = new SatelliteVariableWriter();
+            int iter = 0;
+
             while (aos.getNumberOfEvaluations() < maxNFE) {
 
                 aos.step();
@@ -192,6 +197,9 @@ public class SearchHarris {
                                 + " Approximate time remaining %10f min.",
                                 aos.getNumberOfEvaluations(), maxNFE, currentTime,
                                 currentTime / emoea.getNumberOfEvaluations() * (maxNFE - aos.getNumberOfEvaluations())));
+
+                writer.write(mode + i + "_population_" + iter + ".csv", aos.getPopulation().iterator());
+                iter++;
             }
             System.out.println(aos.getArchive().size());
 
@@ -199,9 +207,7 @@ public class SearchHarris {
             Logger.getGlobal().finest(String.format("Took %.4f sec", (endTime - startTime) / Math.pow(10, 9)));
 
             // Save solutions in a csv file
-            SatelliteVariableWriter writer = new SatelliteVariableWriter();
             writer.write(mode + i + "_archive.csv", aos.getArchive().iterator());
-            writer.write(mode + i + "_population.csv", aos.getPopulation().iterator());
             writer.write(mode + i + "_allSolutions.csv", aos.getAllSolutions().iterator());
 
             try {
