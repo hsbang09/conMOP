@@ -50,6 +50,7 @@ import seakers.orekit.util.OrekitConfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -69,7 +70,9 @@ public class SearchHarris {
      */
     public static void main(String[] args) throws OrekitException {
 
-        String path = "/home/ubuntu/conMOP/results/";
+        // Set path
+        StringJoiner path = new StringJoiner(File.separator);
+        path.add(System.getProperty("user.dir"));
 
         //setup logger
         Level level = Level.FINEST;
@@ -129,11 +132,25 @@ public class SearchHarris {
         //set up the search parameters
         int populationSize = 50;
         int maxNFE = 200;
-//        String mode = path + "static_";
-        String mode = path + "variable_";
+
+        // Set run name
+        StringJoiner runName = new StringJoiner("_");
+
+//        String mode = path + "static";
+        String mode =  "variable";
 //        String mode = "kd";
 
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
+
+        runName.add(mode);
+        runName.add(timestamp);
+        path.add(runName.toString());
+
         for (int i = 0; i < 1; i++) {
+
+            // Set base filenames
+            path.add(mode + "_" + i);
+            String baseFilename = path.toString();
 
             long startTime = System.nanoTime();
             Initialization initialization = new RandomInitialization(problem,
@@ -201,8 +218,8 @@ public class SearchHarris {
                                 aos.getNumberOfEvaluations(), maxNFE, currentTime,
                                 currentTime / emoea.getNumberOfEvaluations() * (maxNFE - aos.getNumberOfEvaluations())));
 
-                if(aos.getNumberOfEvaluations() % 500 == 0){
-                    writer.write(mode + i + "_population_" + popIndex + ".csv", aos.getPopulation().iterator());
+                if(aos.getNumberOfEvaluations() % 50 == 0){
+                    writer.write(baseFilename + "_population_" + popIndex + ".csv", aos.getPopulation().iterator());
                     popIndex++;
                 }
             }
@@ -212,19 +229,19 @@ public class SearchHarris {
             Logger.getGlobal().finest(String.format("Took %.4f sec", (endTime - startTime) / Math.pow(10, 9)));
 
             // Save solutions in a csv file
-            writer.write(mode + i + "_archive.csv", aos.getArchive().iterator());
-            writer.write(mode + i + "_allSolutions.csv", aos.getAllSolutions().iterator());
+            writer.write(baseFilename + "_archive.csv", aos.getArchive().iterator());
+            writer.write(baseFilename + "_allSolutions.csv", aos.getAllSolutions().iterator());
 
             try {
-                PopulationIO.write(new File(mode + i + "_all.pop"), aos.getAllSolutions());
-                PopulationIO.write(new File(mode + i + ".pop"), aos.getPopulation());
-                PopulationIO.writeObjectives(new File(mode + i + "_all.obj"), aos.getAllSolutions());
-                PopulationIO.writeObjectives(new File(mode + i + ".obj"), aos.getPopulation());
+                PopulationIO.write(new File(baseFilename + "_all.pop"), aos.getAllSolutions());
+                PopulationIO.write(new File(baseFilename + ".pop"), aos.getPopulation());
+                PopulationIO.writeObjectives(new File(baseFilename + "_all.obj"), aos.getAllSolutions());
+                PopulationIO.writeObjectives(new File(baseFilename + ".obj"), aos.getPopulation());
             } catch (IOException ex) {
                 Logger.getLogger(SearchHarris.class.getName()).log(Level.SEVERE, null, ex);
             }
-            AOSHistoryIO.saveCreditHistory(aos.getCreditHistory(), new File(mode + i + ".credit"), ",");
-            AOSHistoryIO.saveSelectionHistory(aos.getSelectionHistory(), new File(mode + i + ".select"), ",");
+            AOSHistoryIO.saveCreditHistory(aos.getCreditHistory(), new File(baseFilename + ".credit"), ",");
+            AOSHistoryIO.saveSelectionHistory(aos.getSelectionHistory(), new File(baseFilename + ".select"), ",");
         }
 
         OrekitConfig.end();
