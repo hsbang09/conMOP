@@ -73,6 +73,7 @@ public class SearchHarris {
         // Set path
         StringJoiner path = new StringJoiner(File.separator);
         path.add(System.getProperty("user.dir"));
+        path.add("results");
 
         //setup logger
         Level level = Level.FINEST;
@@ -130,8 +131,8 @@ public class SearchHarris {
                 tBounds, smaBounds, incBounds, gndStations, problemProperty);
         
         //set up the search parameters
-        int populationSize = 50;
-        int maxNFE = 200;
+        int populationSize = 100;
+        int maxNFE = 10000;
 
         // Set run name
         StringJoiner runName = new StringJoiner("_");
@@ -218,7 +219,7 @@ public class SearchHarris {
                                 aos.getNumberOfEvaluations(), maxNFE, currentTime,
                                 currentTime / emoea.getNumberOfEvaluations() * (maxNFE - aos.getNumberOfEvaluations())));
 
-                if(aos.getNumberOfEvaluations() % 50 == 0){
+                if(aos.getNumberOfEvaluations() % 1000 == 0){
                     writer.write(baseFilename + "_population_" + popIndex + ".csv", aos.getPopulation().iterator());
                     popIndex++;
                 }

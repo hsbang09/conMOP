@@ -86,7 +86,7 @@ public class SatelliteVariableWriter {
             }
 
             for(int i = 0; i < maxNumSat; i++){
-                if(i < sma.size()){
+                if(i < inc.size()){
                     row.add(Double.toString(inc.get(i)));
                 }else{
                     row.add("null");
@@ -94,7 +94,7 @@ public class SatelliteVariableWriter {
             }
 
             for(int i = 0; i < maxNumSat; i++){
-                if(i < sma.size()){
+                if(i < raan.size()){
                     row.add(Double.toString(raan.get(i)));
                 }else{
                     row.add("null");
@@ -102,7 +102,7 @@ public class SatelliteVariableWriter {
             }
 
             for(int i = 0; i < maxNumSat; i++){
-                if(i < sma.size()){
+                if(i < ta.size()){
                     row.add(Double.toString(ta.get(i)));
                 }else{
                     row.add("null");
