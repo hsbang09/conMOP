@@ -206,7 +206,7 @@ public class ConstellationOptimizer extends AbstractProblem {
             Bounds<Double> sma, Bounds<Double> ecc, Bounds<Double> inc,
             Bounds<Double> raan, Bounds<Double> ap, Bounds<Double> ta,
             Collection<GndStation> gndStations, Properties properties) {
-        super(1, 4);
+        super(1, 3);
 
         try {
             this.startDate = startDate;

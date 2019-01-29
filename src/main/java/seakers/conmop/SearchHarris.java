@@ -131,7 +131,7 @@ public class SearchHarris {
                 tBounds, smaBounds, incBounds, gndStations, problemProperty);
         
         //set up the search parameters
-        int populationSize = 100;
+        int populationSize = 200;
         int maxNFE = 10000;
 
         // Set run name
@@ -205,10 +205,7 @@ public class SearchHarris {
 
             System.out.println(String.format("Initializing population... Size = %d", populationSize));
 
-            // Initialize population writer
-            SatelliteVariableWriter writer = new SatelliteVariableWriter();
             int popIndex = 0;
-
             while (aos.getNumberOfEvaluations() < maxNFE) {
 
                 aos.step();
@@ -219,7 +216,8 @@ public class SearchHarris {
                                 aos.getNumberOfEvaluations(), maxNFE, currentTime,
                                 currentTime / emoea.getNumberOfEvaluations() * (maxNFE - aos.getNumberOfEvaluations())));
 
-                if(aos.getNumberOfEvaluations() % 1000 == 0){
+                if(aos.getNumberOfEvaluations() % 1000 == 0){// Initialize population writer
+                    SatelliteVariableWriter writer = new SatelliteVariableWriter();
                     writer.write(baseFilename + "_population_" + popIndex + ".csv", aos.getPopulation().iterator());
                     popIndex++;
                 }
@@ -228,6 +226,9 @@ public class SearchHarris {
 
             long endTime = System.nanoTime();
             Logger.getGlobal().finest(String.format("Took %.4f sec", (endTime - startTime) / Math.pow(10, 9)));
+
+            // Initialize population writer
+            SatelliteVariableWriter writer = new SatelliteVariableWriter();
 
             // Save solutions in a csv file
             writer.write(baseFilename + "_archive.csv", aos.getArchive().iterator());
