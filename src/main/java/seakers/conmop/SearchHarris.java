@@ -216,12 +216,14 @@ public class SearchHarris {
                                 aos.getNumberOfEvaluations(), maxNFE, currentTime,
                                 currentTime / emoea.getNumberOfEvaluations() * (maxNFE - aos.getNumberOfEvaluations())));
 
-                if(aos.getNumberOfEvaluations() % 1000 == 0){// Initialize population writer
+                if(aos.getNumberOfEvaluations() % 1000 == 0){
+                    // Initialize population writer
                     SatelliteVariableWriter writer = new SatelliteVariableWriter();
                     writer.write(baseFilename + "_population_" + popIndex + ".csv", aos.getPopulation().iterator());
                     popIndex++;
                 }
             }
+
             System.out.println(aos.getArchive().size());
 
             long endTime = System.nanoTime();

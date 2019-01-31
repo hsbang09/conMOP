@@ -60,7 +60,6 @@ public class SatelliteVariableWriter {
 
             writer.append(header.toString());
             writer.append("\n");
-            writer.flush();
 
             StringBuilder content = new StringBuilder();
 
@@ -92,7 +91,7 @@ public class SatelliteVariableWriter {
                     if(i < sma.size()){
                         row.add(Double.toString(sma.get(i)));
                     }else{
-                        row.add("null");
+                        row.add("");
                     }
                 }
 
@@ -100,7 +99,7 @@ public class SatelliteVariableWriter {
                     if(i < inc.size()){
                         row.add(Double.toString(inc.get(i)));
                     }else{
-                        row.add("null");
+                        row.add("");
                     }
                 }
 
@@ -108,7 +107,7 @@ public class SatelliteVariableWriter {
                     if(i < raan.size()){
                         row.add(Double.toString(raan.get(i)));
                     }else{
-                        row.add("null");
+                        row.add("");
                     }
                 }
 
@@ -116,7 +115,7 @@ public class SatelliteVariableWriter {
                     if(i < ta.size()){
                         row.add(Double.toString(ta.get(i)));
                     }else{
-                        row.add("null");
+                        row.add("");
                     }
                 }
 
@@ -129,7 +128,7 @@ public class SatelliteVariableWriter {
                 content.append("\n");
                 cnt++;
 
-                if(cnt % 500 == 0){
+                if(cnt % 1000 == 0){
                     writer.append(content.toString());
                     writer.flush();
                     content = new StringBuilder();
