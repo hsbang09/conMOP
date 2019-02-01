@@ -131,7 +131,7 @@ public class SearchHarris {
                 tBounds, smaBounds, incBounds, gndStations, problemProperty);
         
         //set up the search parameters
-        int populationSize = 200;
+        int populationSize = 100;
         int maxNFE = 10000;
 
         // Set run name
@@ -216,25 +216,18 @@ public class SearchHarris {
                                 aos.getNumberOfEvaluations(), maxNFE, currentTime,
                                 currentTime / emoea.getNumberOfEvaluations() * (maxNFE - aos.getNumberOfEvaluations())));
 
-                if(aos.getNumberOfEvaluations() % 1000 == 0){
-                    // Initialize population writer
-                    SatelliteVariableWriter writer = new SatelliteVariableWriter();
-                    writer.write(baseFilename + "_population_" + popIndex + ".csv", aos.getPopulation().iterator());
-                    popIndex++;
-                }
+//                if(aos.getNumberOfEvaluations() % 1000 == 0){
+//                    // Initialize population writer
+//                    SatelliteVariableWriter writer = new SatelliteVariableWriter();
+//                    writer.write(baseFilename + "_population_" + popIndex + ".csv", aos.getPopulation().iterator());
+//                    popIndex++;
+//                }
             }
 
             System.out.println(aos.getArchive().size());
 
             long endTime = System.nanoTime();
             Logger.getGlobal().finest(String.format("Took %.4f sec", (endTime - startTime) / Math.pow(10, 9)));
-
-            // Initialize population writer
-            SatelliteVariableWriter writer = new SatelliteVariableWriter();
-
-            // Save solutions in a csv file
-            writer.write(baseFilename + "_archive.csv", aos.getArchive().iterator());
-            writer.write(baseFilename + "_allSolutions.csv", aos.getAllSolutions().iterator());
 
             try {
                 PopulationIO.write(new File(baseFilename + "_all.pop"), aos.getAllSolutions());
@@ -246,6 +239,13 @@ public class SearchHarris {
             }
             AOSHistoryIO.saveCreditHistory(aos.getCreditHistory(), new File(baseFilename + ".credit"), ",");
             AOSHistoryIO.saveSelectionHistory(aos.getSelectionHistory(), new File(baseFilename + ".select"), ",");
+
+            // Initialize population writer
+            SatelliteVariableWriter writer = new SatelliteVariableWriter();
+
+            // Save solutions in a csv file
+            writer.write(baseFilename + "_archive.csv", aos.getArchive().iterator());
+            writer.write(baseFilename + "_allSolutions.csv", aos.getAllSolutions().iterator());
         }
 
         OrekitConfig.end();

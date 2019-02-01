@@ -128,7 +128,7 @@ public class SatelliteVariableWriter {
                 content.append("\n");
                 cnt++;
 
-                if(cnt % 1000 == 0){
+                if(cnt % 500 == 0){
                     writer.append(content.toString());
                     writer.flush();
                     content = new StringBuilder();
