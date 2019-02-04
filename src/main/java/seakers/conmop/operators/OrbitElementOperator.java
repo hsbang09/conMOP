@@ -14,6 +14,7 @@ import org.moeaframework.core.Solution;
 import org.moeaframework.core.Variation;
 import org.moeaframework.core.variable.RealVariable;
 import seakers.conmop.util.Bounds;
+import seakers.conmop.util.Factor;
 import seakers.conmop.variable.ConstellationVariable;
 import seakers.conmop.variable.SatelliteVariable;
 import seakers.conmop.variable.WalkerVariable;

@@ -7,6 +7,8 @@ package seakers.conmop.variable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import org.hipparchus.util.FastMath;
 import org.moeaframework.core.PRNG;
 import org.moeaframework.core.Variable;
@@ -96,6 +98,12 @@ public class WalkerVariable extends ConstellationVariable {
         this.tBound = var.tBound;
         this.pBound = var.pBound;
         this.fBound = var.fBound;
+
+        this.sma = var.getSma();
+        this.inc = var.getInc();
+        this.t = var.getT();
+        this.p = var.getP();
+        this.f = var.getF();
     }
 
     /**
@@ -156,6 +164,12 @@ public class WalkerVariable extends ConstellationVariable {
      */
     public final void setWalker(double sma, double inc, int t, int p, int f, double refRaan, double refAnom) {
         checkFeasible(t, p, f);
+
+        this.sma = sma;
+        this.inc = inc;
+        this.t = t;
+        this.p = p;
+        this.f = f;
 
         //Uses Walker delta pattern
         final int s = t / p; //number of satellites per plane
@@ -225,5 +239,69 @@ public class WalkerVariable extends ConstellationVariable {
         this.inc = PRNG.nextDouble(getIncBound().getLowerBound(), getIncBound().getUpperBound());
         this.sma = PRNG.nextDouble(getSmaBound().getLowerBound(), getSmaBound().getUpperBound());
         setWalker(this.sma, this.inc, this.t, this.p, this.f);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.tBound);
+        hash = 41 * hash + Objects.hashCode(this.pBound);
+        hash = 41 * hash + Objects.hashCode(this.fBound);
+        hash = 41 * hash + Objects.hashCode(this.sma);
+        hash = 41 * hash + Objects.hashCode(this.inc);
+        hash = 41 * hash + Objects.hashCode(this.t);
+        hash = 41 * hash + Objects.hashCode(this.p);
+        hash = 41 * hash + Objects.hashCode(this.f);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final WalkerVariable other = (WalkerVariable) obj;
+        if (!Objects.equals(this.tBound, other.tBound)) {
+            return false;
+        }
+        if (!Objects.equals(this.pBound, other.pBound)) {
+            return false;
+        }
+        if (!Objects.equals(this.fBound, other.fBound)) {
+            return false;
+        }
+        if (!Objects.equals(this.sma, other.sma)) {
+            return false;
+        }
+        if (!Objects.equals(this.inc, other.inc)) {
+            return false;
+        }
+        if (!Objects.equals(this.t, other.t)) {
+            return false;
+        }
+        if (!Objects.equals(this.p, other.p)) {
+            return false;
+        }
+        if (!Objects.equals(this.f, other.f)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("sma: %.5f; ", this.sma));
+        sb.append(String.format("inc: %.5f; ", this.inc));
+        sb.append(String.format("t: %.5f; ", this.t));
+        sb.append(String.format("p: %.5f; ", this.p));
+        sb.append(String.format("f: %.5f; ", this.f));
+        return sb.toString();
     }
 }

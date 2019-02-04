@@ -86,7 +86,7 @@ public class SearchWalkerHarris {
         //if running on a non-US machine, need the line below
         Locale.setDefault(new Locale("en", "US"));
 
-        OrekitConfig.init(2);
+        OrekitConfig.init(4);
 
         TimeScale utc = TimeScalesFactory.getUTC();
         AbsoluteDate startDate = new AbsoluteDate(2020, 1, 1, 00, 00, 00.000, utc);
@@ -122,7 +122,7 @@ public class SearchWalkerHarris {
 
         //set up the search parameters
         int populationSize = 100;
-        int maxNFE = 10000;
+        int maxNFE = 2000;
 
         // Set run name
         StringJoiner runName = new StringJoiner("_");
