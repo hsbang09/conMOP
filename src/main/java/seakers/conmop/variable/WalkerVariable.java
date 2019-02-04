@@ -195,6 +195,16 @@ public class WalkerVariable extends ConstellationVariable {
         return f;
     }
 
+    public double getSma(){ return sma; }
+
+    public double getInc(){ return inc; }
+
+    public Bounds getTBound(){ return tBound; }
+
+    public Bounds getPBound(){ return pBound; }
+
+    public Bounds getFBound(){ return fBound; }
+
     @Override
     public Variable copy() {
         return new WalkerVariable(this);
@@ -216,5 +226,4 @@ public class WalkerVariable extends ConstellationVariable {
         this.sma = PRNG.nextDouble(getSmaBound().getLowerBound(), getSmaBound().getUpperBound());
         setWalker(this.sma, this.inc, this.t, this.p, this.f);
     }
-
 }

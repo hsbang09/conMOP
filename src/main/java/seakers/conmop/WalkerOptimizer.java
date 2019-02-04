@@ -187,10 +187,11 @@ public class WalkerOptimizer extends AbstractProblem {
     public void evaluate(Solution solution) {
         
         ArrayList<Constellation> constellations = new ArrayList<>();
-        
-        RealVariable sma = (RealVariable) solution.getVariable(0);
-        RealVariable inc = (RealVariable) solution.getVariable(1);
-        WalkerVariable wv = (WalkerVariable) solution.getVariable(2);
+
+        WalkerVariable wv = (WalkerVariable) solution.getVariable(0);
+        RealVariable sma = new RealVariable(wv.getSma(), wv.getSmaBound().getLowerBound(), wv.getSmaBound().getUpperBound());
+        RealVariable inc = new RealVariable(wv.getInc(), wv.getIncBound().getLowerBound(), wv.getIncBound().getUpperBound());
+
         ArrayList<Instrument> payload = new ArrayList<>();
         payload.add(view);
         Walker walker = new Walker("", payload, sma.getValue(), inc.getValue(), 
@@ -217,8 +218,12 @@ public class WalkerOptimizer extends AbstractProblem {
         }
 
         GroundEventAnalyzer gea = new GroundEventAnalyzer(fovEvent.getEvents(cdef));
-        DescriptiveStatistics gapStats = gea.getStatistics(AnalysisMetric.DURATION, false, new Properties());
-        solution.setObjective(0, gapStats.getMean());
+
+        DescriptiveStatistics respStats = gea.getStatistics(AnalysisMetric.MEAN_TIME_TO_T, false, properties);
+//        DescriptiveStatistics gapStats = gea.getStatistics(AnalysisMetric.DURATION, false, properties);
+
+        solution.setObjective(0, respStats.getMean());
+//        solution.setObjective(0, gapStats.getMean());
         solution.setObjective(1, walker.getSatellites().size());
     }
 
@@ -228,5 +233,4 @@ public class WalkerOptimizer extends AbstractProblem {
         soln.setVariable(0, new WalkerVariable(smaBound, incBound, tBound, pBound, fBound));
         return soln;
     }
-
 }

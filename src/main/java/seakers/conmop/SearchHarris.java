@@ -85,11 +85,11 @@ public class SearchHarris {
         //if running on a non-US machine, need the line below
         Locale.setDefault(new Locale("en", "US"));
 
-        OrekitConfig.init(3);
+        OrekitConfig.init(2);
 
         TimeScale utc = TimeScalesFactory.getUTC();
-        AbsoluteDate startDate = new AbsoluteDate(2016, 1, 1, 00, 00, 00.000, utc);
-        AbsoluteDate endDate = new AbsoluteDate(2016, 1, 8, 00, 00, 00.000, utc);
+        AbsoluteDate startDate = new AbsoluteDate(2020, 1, 1, 00, 00, 00.000, utc);
+        AbsoluteDate endDate = new AbsoluteDate(2020, 1, 8, 00, 00, 00.000, utc);
 
         //Enter satellite orbital parameters
         double a = Constants.WGS84_EARTH_EQUATORIAL_RADIUS;
@@ -226,26 +226,26 @@ public class SearchHarris {
 
             System.out.println(aos.getArchive().size());
 
-            long endTime = System.nanoTime();
-            Logger.getGlobal().finest(String.format("Took %.4f sec", (endTime - startTime) / Math.pow(10, 9)));
-
-            try {
-                PopulationIO.write(new File(baseFilename + "_all.pop"), aos.getAllSolutions());
-                PopulationIO.write(new File(baseFilename + ".pop"), aos.getPopulation());
-                PopulationIO.writeObjectives(new File(baseFilename + "_all.obj"), aos.getAllSolutions());
-                PopulationIO.writeObjectives(new File(baseFilename + ".obj"), aos.getPopulation());
-            } catch (IOException ex) {
-                Logger.getLogger(SearchHarris.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            AOSHistoryIO.saveCreditHistory(aos.getCreditHistory(), new File(baseFilename + ".credit"), ",");
-            AOSHistoryIO.saveSelectionHistory(aos.getSelectionHistory(), new File(baseFilename + ".select"), ",");
-
             // Initialize population writer
             SatelliteVariableWriter writer = new SatelliteVariableWriter();
 
             // Save solutions in a csv file
             writer.write(baseFilename + "_archive.csv", aos.getArchive().iterator());
             writer.write(baseFilename + "_allSolutions.csv", aos.getAllSolutions().iterator());
+
+            long endTime = System.nanoTime();
+            Logger.getGlobal().finest(String.format("Took %.4f sec", (endTime - startTime) / Math.pow(10, 9)));
+
+//            try {
+//                PopulationIO.write(new File(baseFilename + "_all.pop"), aos.getAllSolutions());
+//                PopulationIO.write(new File(baseFilename + ".pop"), aos.getPopulation());
+//                PopulationIO.writeObjectives(new File(baseFilename + "_all.obj"), aos.getAllSolutions());
+//                PopulationIO.writeObjectives(new File(baseFilename + ".obj"), aos.getPopulation());
+//            } catch (IOException ex) {
+//                Logger.getLogger(SearchHarris.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            AOSHistoryIO.saveCreditHistory(aos.getCreditHistory(), new File(baseFilename + ".credit"), ",");
+            AOSHistoryIO.saveSelectionHistory(aos.getSelectionHistory(), new File(baseFilename + ".select"), ",");
         }
 
         OrekitConfig.end();

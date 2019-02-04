@@ -13,8 +13,11 @@ import org.moeaframework.core.PRNG;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.Variation;
 import org.moeaframework.core.variable.RealVariable;
+import seakers.conmop.util.Bounds;
 import seakers.conmop.variable.ConstellationVariable;
 import seakers.conmop.variable.SatelliteVariable;
+import seakers.conmop.variable.WalkerVariable;
+import seakers.orekit.constellations.Walker;
 
 /**
  *
@@ -57,7 +60,25 @@ public class OrbitElementOperator implements Variation {
                     break;
                 }
             }
-            if (constelVariables) {
+            boolean walkerVariables = true;
+            for (int j = 0; j < parents.length; j++) {
+                if (!(children[j].getVariable(i) instanceof WalkerVariable)) {
+                    walkerVariables = false;
+                    break;
+                }
+            }
+
+            if (walkerVariables) {
+                WalkerVariable[] input = new WalkerVariable[children.length];
+                for (int j = 0; j < children.length; j++) {
+                    input[j] = (WalkerVariable) children[j].getVariable(i);
+                }
+                WalkerVariable[] output = evolve(input);
+                for (int j = 0; j < children.length; j++) {
+                    children[j].setVariable(i, output[j]);
+                }
+
+            }else if (constelVariables) {
                 ConstellationVariable[] input = new ConstellationVariable[children.length];
                 for (int j = 0; j < children.length; j++) {
                     input[j] = (ConstellationVariable) children[j].getVariable(i);
@@ -66,6 +87,7 @@ public class OrbitElementOperator implements Variation {
                 for (int j = 0; j < children.length; j++) {
                     children[j].setVariable(i, output[j]);
                 }
+
             } else if (satVariables) {
                 //if the solution is composed of satellite variables
                 SatelliteVariable[] input = new SatelliteVariable[children.length];
@@ -79,6 +101,57 @@ public class OrbitElementOperator implements Variation {
             }
         }
         return children;
+    }
+
+    /**
+     * Operates on the WalkerVariable
+     *
+     * @param walkerConstellations walker constellations to recombine
+     * @return recombined constellation variables
+     */
+    private WalkerVariable[] evolve(WalkerVariable[] walkerConstellations) {
+
+        //create the vector representation of the constellation
+        Solution[] parents = new Solution[walkerConstellations.length];
+        for (int i = 0; i < walkerConstellations.length; i++) {
+
+            Solution parent = new Solution(5, 0);
+
+            WalkerVariable wv = walkerConstellations[i];
+
+            parent.setVariable(0,
+                    new RealVariable(wv.getSma(), wv.getSmaBound().getLowerBound(), wv.getSmaBound().getUpperBound()));
+
+            parent.setVariable(1,
+                    new RealVariable(wv.getInc(), wv.getIncBound().getLowerBound(), wv.getIncBound().getUpperBound()));
+
+            parent.setVariable(2,
+                    new RealVariable(wv.getT(), (double) wv.getTBound().getLowerBound(), (double) wv.getTBound().getUpperBound()));
+
+            parent.setVariable(3,
+                    new RealVariable(wv.getP(), (double) wv.getPBound().getLowerBound(), (double) wv.getPBound().getUpperBound()));
+
+            parent.setVariable(4,
+                    new RealVariable(wv.getF(), (double) wv.getFBound().getLowerBound(), (double) wv.getFBound().getUpperBound()));
+
+            parents[i] = parent;
+        }
+
+        Solution[] children = operator.evolve(parents);
+
+        WalkerVariable[] out = walkerConstellations;
+        for (int i = 0; i < children.length; i++) {
+
+            Solution child = children[i];
+            double sma = ((RealVariable) child.getVariable(0)).getValue();
+            double inc = ((RealVariable) child.getVariable(1)).getValue();
+            int t = (int) Math.round(((RealVariable) child.getVariable(2)).getValue());
+            int p = (int) Math.round(((RealVariable) child.getVariable(3)).getValue());
+            int f = (int) Math.round(((RealVariable) child.getVariable(4)).getValue());
+
+            out[i].setWalker(sma, inc, t, p, f);
+        }
+        return out;
     }
 
     /**
@@ -308,5 +381,4 @@ public class OrbitElementOperator implements Variation {
         }
         return out;
     }
-
 }
