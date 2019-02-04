@@ -7,6 +7,7 @@ package seakers.conmop.operators;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.hipparchus.util.FastMath;
 import org.moeaframework.core.PRNG;
@@ -149,6 +150,76 @@ public class OrbitElementOperator implements Variation {
             int t = (int) Math.round(((RealVariable) child.getVariable(2)).getValue());
             int p = (int) Math.round(((RealVariable) child.getVariable(3)).getValue());
             int f = (int) Math.round(((RealVariable) child.getVariable(4)).getValue());
+
+            WalkerVariable wv = walkerConstellations[i];
+
+            Bounds tBounds = wv.getTBound();
+            Bounds pBounds = wv.getPBound();
+            Bounds fBounds = wv.getFBound();
+
+            if(t < (Integer) tBounds.getLowerBound()){
+                t = (Integer) tBounds.getLowerBound();
+            }else if(t > (Integer) tBounds.getUpperBound()){
+                t = (Integer) tBounds.getUpperBound();
+            }
+
+            if(p < (Integer) pBounds.getLowerBound()){
+                p = (Integer) pBounds.getLowerBound();
+            }else if(p > (Integer) pBounds.getUpperBound()){
+                p = (Integer) pBounds.getUpperBound();
+            }
+
+            if(f < (Integer) fBounds.getLowerBound()){
+                f = (Integer) fBounds.getLowerBound();
+            }else if(f > (Integer) fBounds.getUpperBound()){
+                f = (Integer) fBounds.getUpperBound();
+            }
+
+            if (p > t) {
+                // t >= p
+                p = t;
+            }
+
+            if (!Factor.divisors(t).contains(p)) {
+                // t must be divisible by p
+
+                int tPlus = t;
+                int tMinus = t;
+
+                while(true){
+                    boolean noChange = true;
+
+                    if(tPlus + 1 <= (Integer) tBounds.getUpperBound()){
+                        tPlus = tPlus + 1;
+                        noChange = false;
+
+                        if(Factor.divisors(tPlus).contains(p)){
+                            t = tPlus;
+                            break;
+                        }
+                    }
+
+                    if(tMinus - 1 >= (Integer) tBounds.getLowerBound()){
+                        tMinus = tMinus - 1;
+                        noChange = false;
+
+                        if(Factor.divisors(tMinus).contains(p)){
+                            t = tMinus;
+                            break;
+                        }
+                    }
+
+                    if(noChange){
+                        System.out.println("t: " + t + ", p: " + p);
+                        throw new IllegalStateException("Something went wrong in fixing parameters t and p");
+                    }
+                }
+            }
+
+            if (f >= p) {
+                // f < p
+                f = p - 1;
+            }
 
             out[i].setWalker(sma, inc, t, p, f);
         }
