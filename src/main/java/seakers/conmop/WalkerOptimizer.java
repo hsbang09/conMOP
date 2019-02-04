@@ -213,6 +213,10 @@ public class WalkerOptimizer extends AbstractProblem {
         try {
             scen.call();
         } catch (Exception ex) {
+
+            System.out.println("sma: " + wv.getSma() + ", inc: " + wv.getInc() +
+                    ", t: " +wv.getT() + ", p: " +wv.getP() + ", f: " + wv.getF());
+
             Logger.getLogger(WalkerOptimizer.class.getName()).log(Level.SEVERE, null, ex);
             throw new IllegalStateException("Evaluation failed");
         }
