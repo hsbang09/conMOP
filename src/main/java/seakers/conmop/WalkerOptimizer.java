@@ -209,7 +209,7 @@ public class WalkerOptimizer extends AbstractProblem {
         cdef.assignConstellation(constellations);
         HashSet<CoverageDefinition> cdefSet = new HashSet<>();
         cdefSet.add(cdef);
-        
+
         ArrayList<EventAnalysis> eventanalyses = new ArrayList<>();
         FastCoverageAnalysis fca = new FastCoverageAnalysis(startDate, endDate,
                 inertialFrame, cdefSet, halfAngle);

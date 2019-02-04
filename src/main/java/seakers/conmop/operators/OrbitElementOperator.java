@@ -128,13 +128,13 @@ public class OrbitElementOperator implements Variation {
                     new RealVariable(wv.getInc(), wv.getIncBound().getLowerBound(), wv.getIncBound().getUpperBound()));
 
             parent.setVariable(2,
-                    new RealVariable(wv.getT(), (double) wv.getTBound().getLowerBound(), (double) wv.getTBound().getUpperBound()));
+                    new RealVariable(wv.getT(), (double) ((Integer)wv.getTBound().getLowerBound()).intValue(), (double) ((Integer)wv.getTBound().getUpperBound()).intValue()));
 
             parent.setVariable(3,
-                    new RealVariable(wv.getP(), (double) wv.getPBound().getLowerBound(), (double) wv.getPBound().getUpperBound()));
+                    new RealVariable(wv.getP(), (double) ((Integer)wv.getPBound().getLowerBound()).intValue(), (double) ((Integer)wv.getPBound().getUpperBound()).intValue()));
 
             parent.setVariable(4,
-                    new RealVariable(wv.getF(), (double) wv.getFBound().getLowerBound(), (double) wv.getFBound().getUpperBound()));
+                    new RealVariable(wv.getF(), (double) ((Integer)wv.getFBound().getLowerBound()).intValue(), (double) ((Integer)wv.getFBound().getUpperBound()).intValue()));
 
             parents[i] = parent;
         }
