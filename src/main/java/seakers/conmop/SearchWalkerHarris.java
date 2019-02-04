@@ -118,7 +118,7 @@ public class SearchWalkerHarris {
 
         // define WalkerOptimizer object
         Problem problem = new WalkerOptimizer("", startDate, endDate, pf,
-                points, tBounds, smaBounds, incBounds, problemProperty);
+                points, FastMath.toRadians(51.), tBounds, smaBounds, incBounds, problemProperty);
 
         //set up the search parameters
         int populationSize = 100;

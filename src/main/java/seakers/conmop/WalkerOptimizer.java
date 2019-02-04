@@ -31,6 +31,7 @@ import seakers.conmop.util.Bounds;
 import seakers.conmop.variable.WalkerVariable;
 import seakers.orekit.constellations.Walker;
 import seakers.orekit.coverage.analysis.AnalysisMetric;
+import seakers.orekit.coverage.analysis.FastCoverageAnalysis;
 import seakers.orekit.coverage.analysis.GroundEventAnalyzer;
 import seakers.orekit.event.EventAnalysis;
 import seakers.orekit.event.EventAnalysisEnum;
@@ -82,6 +83,11 @@ public class WalkerOptimizer extends AbstractProblem {
      * The start date of the study
      */
     private final AbsoluteDate startDate;
+
+    /**
+     * Half angle for a simple conical field of view sensor [rad]
+     */
+    private final double halfAngle;
 
     /**
      * The bounds allowable on the total number of satellites
@@ -138,16 +144,16 @@ public class WalkerOptimizer extends AbstractProblem {
      */
     public WalkerOptimizer(String name, AbsoluteDate startDate, AbsoluteDate endDate,
             PropagatorFactory propagatorFactory,
-            Set<GeodeticPoint> poi, Bounds<Integer> tBound,
+            Set<GeodeticPoint> poi, double halfAngle, Bounds<Integer> tBound,
             Bounds<Double> sma,
             Bounds<Double> inc, Properties properties) {
-        this(name, startDate, endDate, propagatorFactory, poi, tBound, tBound,
+        this(name, startDate, endDate, propagatorFactory, poi, halfAngle, tBound, tBound,
                 new Bounds<>(0, tBound.getUpperBound() - 1), sma, inc, properties);
     }
 
     public WalkerOptimizer(String name, AbsoluteDate startDate, AbsoluteDate endDate,
             PropagatorFactory propagatorFactory,
-            Set<GeodeticPoint> poi, Bounds<Integer> tBound,
+            Set<GeodeticPoint> poi, double halfAngle, Bounds<Integer> tBound,
             Bounds<Integer> pBound, Bounds<Integer> fBound, Bounds<Double> sma,
             Bounds<Double> inc, Properties properties) {
         super(1, 2);
@@ -166,6 +172,7 @@ public class WalkerOptimizer extends AbstractProblem {
             this.fBound = fBound;
             this.smaBound = sma;
             this.incBound = inc;
+            this.halfAngle = halfAngle;
 
             //must use IERS_2003 and EME2000 frames to be consistent with STK
             Frame earthFrame = FramesFactory.getITRF(IERSConventions.IERS_2003, true);
@@ -202,11 +209,11 @@ public class WalkerOptimizer extends AbstractProblem {
         cdef.assignConstellation(constellations);
         HashSet<CoverageDefinition> cdefSet = new HashSet<>();
         cdefSet.add(cdef);
-
-        EventAnalysisFactory eaf = new EventAnalysisFactory(startDate, endDate, inertialFrame, propagatorFactory);
+        
         ArrayList<EventAnalysis> eventanalyses = new ArrayList<>();
-        FieldOfViewEventAnalysis fovEvent = (FieldOfViewEventAnalysis) eaf.createGroundPointAnalysis(EventAnalysisEnum.FOV, cdefSet, properties);
-        eventanalyses.add(fovEvent);
+        FastCoverageAnalysis fca = new FastCoverageAnalysis(startDate, endDate,
+                inertialFrame, cdefSet, halfAngle);
+        eventanalyses.add(fca);
 
         Scenario scen = new Scenario("", startDate, endDate, timeScale,
                 inertialFrame, propagatorFactory, cdefSet, eventanalyses, new ArrayList<>(), properties);
@@ -221,13 +228,12 @@ public class WalkerOptimizer extends AbstractProblem {
             throw new IllegalStateException("Evaluation failed");
         }
 
-        GroundEventAnalyzer gea = new GroundEventAnalyzer(fovEvent.getEvents(cdef));
+        GroundEventAnalyzer gea = new GroundEventAnalyzer(fca.getEvents(cdef));
+        Properties properties = new Properties();
+        properties.setProperty("threshold", "7200.0");
 
         DescriptiveStatistics respStats = gea.getStatistics(AnalysisMetric.MEAN_TIME_TO_T, false, properties);
-//        DescriptiveStatistics gapStats = gea.getStatistics(AnalysisMetric.DURATION, false, properties);
-
         solution.setObjective(0, respStats.getMean());
-//        solution.setObjective(0, gapStats.getMean());
         solution.setObjective(1, walker.getSatellites().size());
     }
 
