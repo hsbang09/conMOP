@@ -209,7 +209,7 @@ public class WalkerOptimizer extends AbstractProblem {
         eventanalyses.add(fovEvent);
 
         Scenario scen = new Scenario("", startDate, endDate, timeScale,
-                inertialFrame, propagatorFactory, cdefSet, eventanalyses, null, properties);
+                inertialFrame, propagatorFactory, cdefSet, eventanalyses, new ArrayList<>(), properties);
         try {
             scen.call();
         } catch (Exception ex) {
